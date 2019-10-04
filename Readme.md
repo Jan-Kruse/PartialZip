@@ -1,5 +1,7 @@
 # PartialZip
 
+[![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://github.com/Jan-Kruse/PartialZip/blob/master/LICENSE) 
+
 PartialZip is a .NET-Standard library to download specific files from remote .zip archives.
 
 PartialZip is based on [libfragmentzip](https://github.com/tihmstar/libfragmentzip) by [@tihmstar](https://twitter.com/tihmstar).
@@ -7,6 +9,10 @@ PartialZip is based on [libfragmentzip](https://github.com/tihmstar/libfragmentz
 ## External Dependencies
 
 None
+
+## Installation
+
+TODO
 
 ## Documentation
 
