@@ -2,6 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Jan Kruse</Authors>
+    <Company />
+    <Description>PartialZip is a .NET-Standard library to download specific files from remote .zip archives.</Description>
+    <Copyright>Copyright © Jan Kruse 2019</Copyright>
+    <PackageLicenseExpression>LGPL-3.0-only</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/Jan-Kruse/PartialZip</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Jan-Kruse/PartialZip</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>.net, zip, archive, partial, fragment, download, http</PackageTags>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
 </Project>
