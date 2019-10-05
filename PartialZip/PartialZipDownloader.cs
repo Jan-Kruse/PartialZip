@@ -1,4 +1,5 @@
-﻿using PartialZip.Models;
+﻿using PartialZip.Exceptions;
+using PartialZip.Models;
 using PartialZip.Services;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ namespace PartialZip
         {
             this._archiveUrl = archiveUrl;
 
-            this._httpService = new HttpService();
+            this._httpService = new HttpService(this._archiveUrl);
             this._deflateService = new DeflateService();
         }
 
@@ -54,21 +55,26 @@ namespace PartialZip
 
         private async Task<PartialZipInfo> Open()
         {
+            bool supportsPartialZip = await this._httpService.SupportsPartialZip();
+
+            if (!supportsPartialZip)
+                throw new PartialZipNotSupportedException("The web server does not support PartialZip as byte ranges are not accepted.");
+
             PartialZipInfo info = new PartialZipInfo();
 
-            info.Length = await this._httpService.GetContentLength(this._archiveUrl);
+            info.Length = await this._httpService.GetContentLength();
 
-            byte[] eocdBuffer = await this._httpService.GetRange(this._archiveUrl, info.Length - EndOfCentralDirectory.Size, info.Length - 1);
+            byte[] eocdBuffer = await this._httpService.GetRange(info.Length - EndOfCentralDirectory.Size, info.Length - 1);
             info.EndOfCentralDirectory = new EndOfCentralDirectory(eocdBuffer);
 
             ulong startCD, endCD;
 
             if(info.EndOfCentralDirectory.IsZip64)
             {
-                byte[] eocdLocator64Buffer = await this._httpService.GetRange(this._archiveUrl, info.Length - EndOfCentralDirectory.Size - EndOfCentralDirectoryLocator64.Size, info.Length - EndOfCentralDirectory.Size);
+                byte[] eocdLocator64Buffer = await this._httpService.GetRange(info.Length - EndOfCentralDirectory.Size - EndOfCentralDirectoryLocator64.Size, info.Length - EndOfCentralDirectory.Size);
                 info.EndOfCentralDirectoryLocator64 = new EndOfCentralDirectoryLocator64(eocdLocator64Buffer);
 
-                byte[] eocd64Buffer = await this._httpService.GetRange(this._archiveUrl, info.EndOfCentralDirectoryLocator64.EndOfCentralDirectory64StartOffset, info.EndOfCentralDirectoryLocator64.EndOfCentralDirectory64StartOffset + EndOfCentralDirectory64.Size - 1);
+                byte[] eocd64Buffer = await this._httpService.GetRange(info.EndOfCentralDirectoryLocator64.EndOfCentralDirectory64StartOffset, info.EndOfCentralDirectoryLocator64.EndOfCentralDirectory64StartOffset + EndOfCentralDirectory64.Size - 1);
                 info.EndOfCentralDirectory64 = new EndOfCentralDirectory64(eocd64Buffer);
 
                 (startCD, endCD) = (info.EndOfCentralDirectory64.CentralDirectoryStartOffset, info.EndOfCentralDirectory64.CentralDirectoryStartOffset + info.EndOfCentralDirectory64.CentralDirectorySize + EndOfCentralDirectory64.Size - 1);
@@ -80,7 +86,7 @@ namespace PartialZip
                 info.CentralDirectoryEntries = info.EndOfCentralDirectory.CentralDirectoryRecordCount;
             }
 
-            byte[] cdBuffer = await this._httpService.GetRange(this._archiveUrl, startCD, endCD);
+            byte[] cdBuffer = await this._httpService.GetRange(startCD, endCD);
             info.CentralDirectory = CentralDirectoryHeader.GetFromBuffer(cdBuffer, info.CentralDirectoryEntries);
 
             return info;
@@ -94,11 +100,11 @@ namespace PartialZip
             {
                 (ulong uncompressedSize, ulong compressedSize, ulong headerOffset, uint diskNum) = cd.GetFileInfo();
 
-                byte[] localFileBuffer = await this._httpService.GetRange(this._archiveUrl, headerOffset, headerOffset + LocalFileHeader.Size - 1);
+                byte[] localFileBuffer = await this._httpService.GetRange(headerOffset, headerOffset + LocalFileHeader.Size - 1);
                 LocalFileHeader localFileHeader = new LocalFileHeader(localFileBuffer);
 
                 ulong start = headerOffset + LocalFileHeader.Size + localFileHeader.FileNameLength + localFileHeader.ExtraFieldLength;
-                byte[] compressedContent = await this._httpService.GetRange(this._archiveUrl, start, start + compressedSize - 1);
+                byte[] compressedContent = await this._httpService.GetRange(start, start + compressedSize - 1);
 
                 switch(localFileHeader.Compression)
                 {
@@ -107,11 +113,11 @@ namespace PartialZip
                     case 8:
                         return this._deflateService.Inflate(compressedContent);
                     default:
-                        throw new Exception("Unknown compression.");
+                        throw new PartialZipUnsupportedCompressionException("Unknown compression.");
                 }
             }
 
-            throw new Exception($"Could not find file {filePath} in archive.");
+            throw new PartialZipFileNotFoundException($"Could not find file {filePath} in archive.");
         }
     }
 }

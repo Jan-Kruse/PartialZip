@@ -14,7 +14,9 @@ None
 
 TODO
 
-## Documentation
+## Usage
+
+The remote web server must support [HTTP range requests](https://developer.mozilla.org/en-US/docs/Web/HTTP/Range_requests).
 
 Loading a list of all files in a .zip archive:
 

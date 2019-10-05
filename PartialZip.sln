@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29306.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PartialZip", "PartialZip\PartialZip.csproj", "{87514417-14AA-44B0-A9A9-D7C4DEF6D2EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PartialZip.Test", "PartialZip.Test\PartialZip.Test.csproj", "{662C4898-0ED4-4112-A887-624FFECDBC1B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PartialZip.Test", "PartialZip.Test\PartialZip.Test.csproj", "{7A767814-9257-4963-AA95-8E319AB0ACFA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{87514417-14AA-44B0-A9A9-D7C4DEF6D2EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87514417-14AA-44B0-A9A9-D7C4DEF6D2EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87514417-14AA-44B0-A9A9-D7C4DEF6D2EC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{662C4898-0ED4-4112-A887-624FFECDBC1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{662C4898-0ED4-4112-A887-624FFECDBC1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{662C4898-0ED4-4112-A887-624FFECDBC1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{662C4898-0ED4-4112-A887-624FFECDBC1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A767814-9257-4963-AA95-8E319AB0ACFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A767814-9257-4963-AA95-8E319AB0ACFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A767814-9257-4963-AA95-8E319AB0ACFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A767814-9257-4963-AA95-8E319AB0ACFA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

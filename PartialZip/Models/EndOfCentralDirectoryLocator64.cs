@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PartialZip.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -23,7 +24,7 @@ namespace PartialZip.Models
             }
             else
             {
-                throw new Exception("The supplied buffer is too small");
+                throw new PartialZipParsingException("Failed to parse end of ZIP64 central directory locator. The supplied buffer is too small");
             }
         }
 
