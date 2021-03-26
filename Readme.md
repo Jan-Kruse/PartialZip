@@ -1,7 +1,7 @@
 # PartialZip
 
 [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://github.com/Jan-Kruse/PartialZip/blob/master/LICENSE)
-[![Nuget](https://img.shields.io/nuget/v/PartialZip.svg?colorB=green&style=flat)](https://www.nuget.org/packages/PartialZip/1.0.0)
+[![Nuget](https://img.shields.io/nuget/v/PartialZip.svg?colorB=green&style=flat)](https://www.nuget.org/packages/PartialZip/1.0.1)
 
 PartialZip is a .NET-Standard library to download specific files from remote .zip archives.
 
@@ -51,3 +51,6 @@ Further reading: [.ZIP File Format Specification](https://pkware.cachefly.net/we
 ## Credits
 
 [@tihmstar](https://twitter.com/tihmstar) for [libfragmentzip](https://github.com/tihmstar/libfragmentzip)
+
+## Contributors
+[BuIlDaLiBlE](https://github.com/BuIlDaLiBlE) 
