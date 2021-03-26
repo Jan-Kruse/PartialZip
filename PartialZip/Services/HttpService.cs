@@ -51,7 +51,7 @@ namespace PartialZip.Services
                 HttpWebRequest request = WebRequest.CreateHttp(this._url);
                 request.AllowAutoRedirect = true;
                 request.KeepAlive = true;
-                request.Headers.Add("Range", $"bytes={startBytes}-{endBytes}");
+                request.AddRange((long)startBytes, (long)endBytes);
                 request.Method = "GET";
 
                 using (WebResponse response = await request.GetResponseAsync())
